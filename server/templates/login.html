@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+  <!-- Bootstrap core CSS -->
+    <style type='text/css'>
+      .form-signin {
+         max-width:200px;
+         padding:10px;
+         margin:60px auto  ;
+       }
+      .form-signin-heading {
+          max-width:330px;
+          text-align: center;
+          padding:0px;
+          margin:100px auto 0 ;
+          }
+       input {
+          magrin-bottom:3px;
+       }
+        </style>
+  <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>登陆</title>
+</head>
+<body>
+
+   <div class="container" >
+    <h2 class="form-signin-heading">Web 管理平台</h2>
+   <form class="form-signin" role="form"  action=""  method="post" enctype="multipart/form-data">
+        用户名<input type="text" name="username" class="form-control" placeholder="用户名" required autofocus>
+        密   码<input type="password" name="password" class="form-control" placeholder="密码"  required>
+       {% if error %}
+             <p><strong>{{ info }}</strong></p>
+              {% endif %}
+         <button class="btn  btn-primary " type="submit">登陆</button>
+
+       </form>
+     </div>
+
+</body>
+</html>

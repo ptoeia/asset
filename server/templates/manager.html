@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="register.html">添加新用户</a>
+<table width="100" class=" table-condensed table-bordered">
+    <thead>
+       <tr>
+           <th>user</th>
+           <th>Email</th>
+       </tr>
+    </thead>
+    {% for admin in admins %}
+    <tbody>
+        <tr>
+            <td>{{ admin.username }}</td>
+            <td>{{ admin.email }}</td>
+         </tr>
+
+    </tbody>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

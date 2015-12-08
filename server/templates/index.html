@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+<!--<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>server</title>
+    <style type="text/css">
+        .tool_bar{margin:25px auto;width:600px;height:50px;border:1px solid #F00}
+        .server_list{margin:0 auto;width:700px;height:100px;border:1px solid #F00}
+    </style>
+</head>
+<body>  -->
+{% block content %}
+  <div class="container">
+     <div class="table">
+        <td>
+             <form class="form-search" aciton="" method="get">
+                 <input type="text" class="input-medium search-query" name="q" placeholder="关键词">
+                 <input type="submit" value="搜索" class="btn">
+             </form>
+        </td>
+       </tr>
+<!--         {% if error %}
+       <p style="color:red;">please submit a search term.</p>
+         {% endif %} !-->
+    </div>
+       <div >
+
+           <table  width="600" class="  table-hover table-condensed table-bordered" >
+               <thead>
+                  <tr align="right">
+                      <th border="0"></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th><a href="/server/add">添加</a></th>
+                      <th><a href="/server/export" target="">导出</a></th>
+
+                  </tr>
+                  <tr bgcolor="#E8FFE8" >
+                     <th  align="center">序号</th>
+                     <th width= align="center">服务器名</th>
+                     <th  align="center">IP</th>
+                     <th width= align="center">用途</th>
+                     <th width= align="center">状态</th>
+                   <!--  <th width= align="center">位置</th>-->
+                     <th width align="center">备注</th>
+                  </tr>
+               </thead>
+                {% for server in server_list  %}
+               <tbody class='success error warning info'>
+                   <tr font="Arial" >
+                       <td data-align="right">{{ forloop.counter }}</td>
+                       <td data-align="right"><a href="/server/edit/{{ server.id }}">{{ server.name }}</a></td>
+                       <td data-align="right">{{ server.ip }}</td>
+                       <td data-align="right">{{ server.purpose }}</td>
+                       <td data-align="right">{{ server.status }}</td>
+                    <!--   <td data-align="right">{{ server.location }}</td>-->
+                       <td data-align="right">{{ server.remark }}</td>
+                   </tr>
+               </tbody>
+               {% endfor %}
+           </table>
+           <!--  <input type="submit" name="del" value="delete" class="btn">-->
+       </div>
+       <div class = "pagination">
+           <span >
+               {% if server_list.has_previous %}
+            <a href="?page={{ server_list.previous_page_number }}">上一页</a>
+            {% endif %}
+           <span >
+               {% for i in page_list  %}
+               <a href="?page={{ i }}" >{{ i }}</a>
+               {% endfor %}
+               第{{ server_list.number }}页
+           </span>
+               {% if server_list.has_next %}
+               <a href="?page={{ server_list.next_page_number }}" >下一页</a>
+               {% endif %}
+           </span>
+        </div>
+  </div>
+{% endblock %}
+<!--</body>
+</html> -->

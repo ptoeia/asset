@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %} Delete {% endblock %}
+{% block head %}
+<script LANGUAGE="JavaScript">
+    function del(){
+         if(window.confirm("确实要删除吗？")){
+            window.location = "/server/del/";
+        }else{
+            return false;
+        }
+    }
+
+</script>
+!->
+
+{% endblock %}
+
+{% block content %}
+<!--<form>
+    {% for server in servers %}
+    <input type="checkbox" name= server value="{{ server.id}}"><a href="/server/edit/{{ server.id }}">{{ server }}</a>
+    <br>
+    {% endfor %}
+    <input type="submit" value="删除">
+</form>!-->
+<div>
+<form action=""  method="post">
+<label>确定删除？</label>
+ <input type="submit" name= check  value="确定">
+ <input type="submit"   value="返fe回">
+
+</form>
+
+</div>
+
+{% endblock %}
