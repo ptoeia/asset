@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 # __author__ = 'abc'
 import csv
+import os
 
 from django.shortcuts import render_to_response
 from django.forms.models import model_to_dict
@@ -43,7 +44,6 @@ def add_server(request):
         form = ServerForm(request.POST)
         if form.is_valid():
             form.save()
-
             return HttpResponseRedirect ( '/server/index' )
     else:
         form = ServerForm()
@@ -140,6 +140,13 @@ def link(request):
 #    return render_to_response('csv',{'data': csv_data})
 
 
+# Read Tomacat log
+
+def put(request):
+     logpath = "/home/java/tomcat7_Passport/logs/catalina.out"
+     os.environ['logpath']=str(logpath)
+     result = os.popen('cat $logpath').read()
+     return render_to_response('output.html',{result})
 
 
 
