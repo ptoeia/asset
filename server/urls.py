@@ -6,6 +6,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^$', 'server.views.login_view'),
     url(r'^index', 'server.views.assets'),
+    url(r'^output', 'server.views.put'),
     url(r'^add', 'server.views.add_server'),
  #   url(r'^export', 'server.views.export',name='export_csv'),
     url(r'^edit/(?P<eid>\d+)/$', 'server.views.edit_server'),
