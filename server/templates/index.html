@@ -1,4 +1,28 @@
 {% extends "base.html" %}
+{% block head %}
+<script>
+  function edit(id)
+  {
+  var xmlhttp;
+   if {window.XMLHTTPRequest)
+    xmlhttp=new XMLHttpRequest();
+    }
+    else
+       {
+       xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+       }
+    xmlhttp.onreadystatechange=function()
+       {
+       if (xmlhttp.readyState==4 && xmlhttp.status==200)
+          {
+           document.getElementById
+           }
+           }
+     xmlhttp.open("GET","/ajax/demo_get.asp",true);
+     xmlhttp.send();
+     }
+</script>
+{% endblock %}
 <!--<!DOCTYPE html>
 <html>
 <head lang="en">
@@ -45,6 +69,7 @@
                      <th width= align="center">状态</th>
                    <!--  <th width= align="center">位置</th>-->
                      <th width align="center">备注</th>
+                      <th width align="center">操作</th>
                   </tr>
                </thead>
                 {% for server in server_list  %}
@@ -57,6 +82,7 @@
                        <td data-align="right">{{ server.status }}</td>
                     <!--   <td data-align="right">{{ server.location }}</td>-->
                        <td data-align="right">{{ server.remark }}</td>
+                       <td data-align="right"><a href="/server/edit/{{ server.id }}" onclick="edit()">编辑</a></td>
                    </tr>
                </tbody>
                {% endfor %}

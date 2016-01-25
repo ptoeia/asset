@@ -3,6 +3,8 @@
 # __author__ = 'abc'
 import csv
 import os
+import subprocess
+
 
 from django.shortcuts import render_to_response
 from django.forms.models import model_to_dict
@@ -11,7 +13,7 @@ from django.core.servers.basehttp import FileWrapper
 from server.models import Machine
 from form import ServerForm,UserRegister,pagination
 
-from django.http import HttpResponseRedirect,HttpResponse
+from django.http import HttpResponseRedirect,HttpResponse,StreamingHttpResponse
 from django.db.models import Q
 
 from django.contrib.auth import authenticate,login,logout
@@ -72,7 +74,7 @@ def del_server(request, d_id):  # d_id is the server id to be delete
     return HttpResponseRedirect('/server/index')
 
 # User Register
-@login_required(login_url='/templates/login.html')
+@login_required(login_url='login.html')
 def user_register(request):
     if request.method == 'POST':
         newuser = UserRegister(request.POST)
@@ -80,7 +82,7 @@ def user_register(request):
             username = newuser.cleaned_data['username']
             email = newuser.cleaned_data['email']
             password = newuser.cleaned_data['password']
-            newuser = User.objects.create_user(username,email,password)
+            User.objects.create_user(username,email,password)
 #           NewUser.save()
             return HttpResponseRedirect('/server/manager')
     else:
@@ -101,7 +103,7 @@ def login_view(request):
                 #request.session['username'] = username
                 return render_to_response('resource.html',{'username': username})
             else:
-               error = True
+                error = True
     info = '用户名或密码不对'
     return render_to_response('login.html',{'error': error, 'info': info,})
 
@@ -119,9 +121,9 @@ def logout_view(request):
 
 # display admins
 @login_required(login_url='login.html')
-def manager(request):
+def user(request):
     admins = User.objects.all()
-    return render_to_response('manager.html', {'admins': admins})
+    return render_to_response('useradmin.html', {'admins': admins})
 
 # display link resource
 @login_required(login_url='login.html')
@@ -142,18 +144,49 @@ def link(request):
 
 # Read Tomacat log
 
-def put(request):
-     logpath = "/home/java/tomcat7_Passport/logs/catalina.out"
-     os.environ['logpath']=str(logpath)
-     result = os.popen('cat $logpath').read()
-     return render_to_response('output.html',{result})
+@login_required(login_url='login.html')
+def manager(request):
+    sessionid = request.COOKIES
+    return render_to_response('manager.html',{'sessionid': sessionid})
 
+def tomcatlog(request):
+    logfile = "/home/java/tomcat7_Passport/logs/catalina.out"
+    #logpath = "/root/b"
+    os.environ['logfile']=str(logfile)
+    popen = subprocess.Popen('tail -f'+logfile, stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE,shell=True)
+    while True:
+        line = popen.stdout.readlines()
+    #with open(logfile) as logfile:
+     #   result = logfile.readlines()
+    return render_to_response('manager.html', {'result': line})
 
+def tomcatstart(request):
+    #startup = "/home/java/tomcat7_Passport/bin/startup.sh"
+    shutdown = "/home/java/tomcat7_Passport/bin/shutdown.sh"
+    #os.environ['logfile']=str(logfi)
+    result = os.system("/home/java/tomcat7_Eclass/bin/startup.sh")
+    kk = "if ok"
+    return render_to_response('starttomcat.html',{'result': result, 'kk':kk})
 
+#@login_required(login_url='login.html')
+def log(request):
+    return render_to_response('log.html')
 
+#@login_required(login_url='login.html')
+def download(request, projectname): #log file download
+    def  file_iterator(file_name,chunk_size=512):
+        with open(file_name) as f:
+            while True:
+                c = f.read(chunk_size)
+                if c:
+                    yield c
+                else:
+                    break
 
-
-
-
-
+    the_file_name = "F:\python_project\log\%s.zip" % projectname
+    response = StreamingHttpResponse(file_iterator(the_file_name))
+    response['Content-Type'] = 'application/x-zip-compressed'
+    response['Content-Disposition'] = 'attachment;filename = %s.zip' % projectname
+    return response
 

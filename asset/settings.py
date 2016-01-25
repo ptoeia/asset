@@ -115,3 +115,33 @@ STATICFILES_DIRS=(
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/server/'),
 )
+SESSION_COOKIE_AGE = 60*20
+
+'''
+if 0:
+    SESSION_ENGIN = 'redis_sessions.session'
+    SESSION_REDIS_HOST = '192.168.137.152'
+    SESSION_REDIS_PORT = 6379
+SESSION_REDIS_DB = 0
+SESSION_REDIS_PASSWORD = '111111'
+SESSION_COOKIE_AGE = 60*30
+
+CACHES = {
+    'default': {
+       'BACKEND': 'redis_cache.RedisCache',
+        'Location': '<host>:<port>',
+        'OPTIONS':{
+            'DB': 1,
+            'PASSWORD': '111111',
+            #'PARSER_CLASS': 'redis.connection.HiredisParse',
+            'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
+            'CONNECTION_POOL_CLASS_KWARGS': {
+                   'max_connections': 50,
+                    'timeout': 20,
+            }
+
+        },
+    },
+}
+'''
+
