@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Add In Server{% endblock %}
+
+{% block script %}
+ function reverse()
+   {
+    document.getElementById("control").value = "stop";
+      }
+{% endblock %}
+
+{% block content %}
+ <form action="/server/manager/start" method="get">
+    <input type="button" value="启动Tomcat" id = "control" onclick= "reverse()" >
+</form>
+  <button value="qidong" onclick="reverse()" id="controle">fwf</button>
+<a href="/server/manager/start" >启动passport</a>
+{% if not result %}
+   <P>The tomcat start successfully!!</P>
+{% endif %}
+{{ kk }}
+{{ sessionid }}
+
+
+{% endblock %}
