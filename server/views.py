@@ -27,11 +27,11 @@ def assets(request):  # display the server information and search function toget
     if 'q' in request.GET and request.GET['q']:
         query = request.GET['q']
         qset = (
-                  Q(ip__icontains=query)|
-                  Q(name__icontains=query)|
-                  Q(remark__icontains=query)|
-                  Q(purpose__icontains=query)
-                    )
+             Q(ip__icontains=query)|
+             Q(name__icontains=query)|
+             Q(remark__icontains=query)|
+             Q(purpose__icontains=query)
+                  )
         server = Machine.objects.filter(qset)
         server_list, page_list = pagination(request, server)
         return render_to_response('index.html', {'server_list': server_list, "page_list": page_list})
