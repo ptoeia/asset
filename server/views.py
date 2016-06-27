@@ -100,7 +100,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request,user)
-                #request.session['username'] = username
+                request.session['username'] = user.username
                 return render_to_response('resource.html',{'username': username})
             else:
                 error = True
@@ -115,7 +115,7 @@ def index(request):
 # logout
 @login_required(login_url='login.html')
 def logout_view(request):
-    # del request.session['username']
+    del request.session['username']
     logout(request)
     return HttpResponseRedirect('/server/')
 
