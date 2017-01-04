@@ -80,9 +80,9 @@
                        <td data-align="right">{{ server.ip }}</td>
                        <td data-align="right">{{ server.purpose }}</td>
                        <td data-align="right">{{ server.status }}</td>
-                    <!--   <td data-align="right">{{ server.location }}</td>-->
                        <td data-align="right">{{ server.remark }}</td>
                        <td data-align="right"><a href="/server/edit/{{ server.id }}" onclick="edit()">编辑</a></td>
+                       <td data-align="right"><a href="/server/detail/{{ server.id }}" >详情</a></td>
                    </tr>
                </tbody>
                {% endfor %}

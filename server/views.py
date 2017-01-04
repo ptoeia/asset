@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 # __author__ = 'abc'
 import csv
-import os
+import os,re
 import subprocess
 
 
@@ -10,7 +10,7 @@ from django.shortcuts import render_to_response
 from django.forms.models import model_to_dict
 from django.core.servers.basehttp import FileWrapper
 
-from server.models import Machine
+from server.models import Servers
 from form import ServerForm,UserRegister,pagination
 
 from django.http import HttpResponseRedirect,HttpResponse,StreamingHttpResponse
@@ -32,10 +32,10 @@ def assets(request):  # display the server information and search function toget
              Q(remark__icontains=query)|
              Q(purpose__icontains=query)
                   )
-        server = Machine.objects.filter(qset)
+        server = Servers.objects.filter(qset)
         server_list, page_list = pagination(request, server)
         return render_to_response('index.html', {'server_list': server_list, "page_list": page_list})
-    server = Machine.objects.all()
+    server = Servers.objects.all()
     server_list,page_list = pagination(request,server)
     return render_to_response('index.html',{'server_list': server_list, "page_list": page_list})
 
@@ -56,7 +56,7 @@ def add_server(request):
 @login_required(login_url='login.html')
 def edit_server(request, eid):  # e_id is the server id to be edit
     sid = int(eid)
-    edit_svr = Machine.objects.get(id=sid)
+    edit_svr = Servers.objects.get(id=sid)
     if request.method == 'POST':
         edit_form = ServerForm(request.POST, instance=edit_svr)  # bound the instance with edit_form
         if edit_form.is_valid():
@@ -69,7 +69,7 @@ def edit_server(request, eid):  # e_id is the server id to be edit
 # delete server
 @login_required(login_url='login.html')
 def del_server(request, d_id):  # d_id is the server id to be delete
-    server = Machine.objects.get(id=int(d_id))
+    server = Servers.objects.get(id=int(d_id))
     server.delete()
     return HttpResponseRedirect('/server/index')
 
@@ -190,3 +190,8 @@ def download(request, projectname): #log file download
     response['Content-Disposition'] = 'attachment;filename = %s.zip' % projectname
     return response
 
+def servers_detail(request, id):
+    ip = Servers.objects.filter(pk=int(id)).values('ip')
+    server_info = subprocess.check_output("ansible 192.168.137.152 -m setup")
+    mem = re.search('memtotal',server_info).group
+    return HttpResponse('server_details.html',{'men': mem})

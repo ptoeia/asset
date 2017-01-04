@@ -2,7 +2,7 @@
 __author__ = 'abc'
 from django import forms
 from django.forms import ModelForm
-from models import Machine,User
+from models import Servers,User
 from django.contrib.auth.admin import User
 from django.core.paginator import Paginator,InvalidPage,EmptyPage
 
@@ -11,7 +11,7 @@ class ServerForm(ModelForm):
                                      help_text=u'必填', error_messages={'required': u'请输入ip'})
 
     class Meta:
-        model = Machine
+        model = Servers
         fields = ['name', 'ip', 'purpose', 'status',  'remark']
 
 

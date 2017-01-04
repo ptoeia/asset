@@ -1,0 +1,4 @@
+.svn/
+server/migrations/
+*.pyc
+.idea/

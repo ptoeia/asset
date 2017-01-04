@@ -1,6 +1,6 @@
 from django.contrib import admin
-from server.models import Machine
-admin.site.register(Machine)
+from server.models import Servers
+admin.site.register(Servers)
 
 # Register your models here.
 class serveradmin(admin.ModelAdmin):
