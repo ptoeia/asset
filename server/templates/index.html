@@ -1,27 +1,14 @@
 {% extends "base.html" %}
 {% block head %}
-<script>
-  function edit(id)
-  {
-  var xmlhttp;
-   if {window.XMLHTTPRequest)
-    xmlhttp=new XMLHttpRequest();
-    }
-    else
-       {
-       xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-       }
-    xmlhttp.onreadystatechange=function()
-       {
-       if (xmlhttp.readyState==4 && xmlhttp.status==200)
-          {
-           document.getElementById
-           }
-           }
-     xmlhttp.open("GET","/ajax/demo_get.asp",true);
-     xmlhttp.send();
-     }
-</script>
+  <script type="text/javascript" src=" http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+  <script>
+    function server_details(){
+        //var id=$("#
+        $.get("/server/detail/{{ server.id }}",{'id':id},function(data){
+           alter(data);
+        });
+    };
+
 {% endblock %}
 <!--<!DOCTYPE html>
 <html>
@@ -82,7 +69,7 @@
                        <td data-align="right">{{ server.status }}</td>
                        <td data-align="right">{{ server.remark }}</td>
                        <td data-align="right"><a href="/server/edit/{{ server.id }}" onclick="edit()">编辑</a></td>
-                       <td data-align="right"><a href="/server/detail/{{ server.id }}" >详情</a></td>
+                       <td data-align="right"><a href="#" onclick="server_detail()" >详情</a></td>
                    </tr>
                </tbody>
                {% endfor %}
@@ -110,3 +97,5 @@
 {% endblock %}
 <!--</body>
 </html> -->
+
+<div>
