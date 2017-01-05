@@ -3,6 +3,7 @@
 # __author__ = 'abc'
 import csv
 import os,re
+import json
 import subprocess
 
 
@@ -192,7 +193,7 @@ def download(request, projectname): #log file download
 
 def servers_detail(request, id):
     ip = Servers.objects.filter(pk=int(id)).values('ip')
-    raw_info = subprocess.check_output("/usr/bin/ansible {ip} -m setup".format(ip=ip[0]['ip']))
-    base_info = raw_info.split('=>')[1]
+    raw_info = subprocess.check_output("/usr/bin/ansible {ip} -m setup".format(ip=ip[0]['ip']),shell=True)
+    base_info = json.loads(raw_info.split('=>')[1])
     mem = base_info['ansible_facts']['ansbile_memtotal_mb']
     return HttpResponse('server_details.html',{'men': mem})
