@@ -192,6 +192,7 @@ def download(request, projectname): #log file download
 
 def servers_detail(request, id):
     ip = Servers.objects.filter(pk=int(id)).values('ip')
-    server_info = subprocess.check_output("ansible 192.168.137.152 -m setup")
-    mem = re.search('memtotal',server_info).group
+    raw_info = subprocess.check_output("/usr/bin/ansible {ip} -m setup".format(ip=ip[0]['ip']))
+    base_info = raw_info.split('=>')[1]
+    mem = base_info['ansible_facts']['ansbile_memtotal_mb']
     return HttpResponse('server_details.html',{'men': mem})
