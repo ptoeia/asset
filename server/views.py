@@ -131,46 +131,15 @@ def user(request):
 def link(request):
     return render_to_response('resource.html')
 
-#
-#def export_to_csv(request):
-#    response = HttpResponse(content_type='text/csv')
-#    response['Content-Disposition'] = 'attachment; filename="csv"'
-    #write =csv.wirter(response)
-#    csv_data = (
-#        ('first row','foo','bar','baz'),
-#        ('second row','a','b','c','"testing"',"here's a quota"),
-#    )
-#    return render_to_response('csv',{'data': csv_data})
 
-
-# Read Tomacat log
 
 @login_required(login_url='login.html')
 def manager(request):
     sessionid = request.COOKIES
     return render_to_response('manager.html',{'sessionid': sessionid})
 
-def tomcatlog(request):
-    logfile = "/home/java/tomcat7_Passport/logs/catalina.out"
-    #logpath = "/root/b"
-    os.environ['logfile']=str(logfile)
-    popen = subprocess.Popen('tail -f'+logfile, stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE,shell=True)
-    while True:
-        line = popen.stdout.readlines()
-    #with open(logfile) as logfile:
-     #   result = logfile.readlines()
-    return render_to_response('manager.html', {'result': line})
 
-def tomcatstart(request):
-    #startup = "/home/java/tomcat7_Passport/bin/startup.sh"
-    shutdown = "/home/java/tomcat7_Passport/bin/shutdown.sh"
-    #os.environ['logfile']=str(logfi)
-    result = os.system("/home/java/tomcat7_Eclass/bin/startup.sh")
-    kk = "if ok"
-    return render_to_response('starttomcat.html',{'result': result, 'kk':kk})
-
-#@login_required(login_url='login.html')
+@login_required(login_url='login.html')
 def log(request):
     return render_to_response('log.html')
 
@@ -191,9 +160,10 @@ def download(request, projectname): #log file download
     response['Content-Disposition'] = 'attachment;filename = %s.zip' % projectname
     return response
 
+
 def servers_detail(request, id):
     ip = Servers.objects.filter(pk=int(id)).values('ip')
     raw_info = subprocess.check_output("/usr/bin/ansible {ip} -m setup".format(ip=ip[0]['ip']),shell=True)
     base_info = json.loads(raw_info.split('=>')[1])
     mem = base_info['ansible_facts']['ansible_memtotal_mb']
-    return render_to_response('server_details.html',{'mem':mem})
+    return HttpResponse(mem)

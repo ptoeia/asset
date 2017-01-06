@@ -2,6 +2,15 @@
 {% block title %}
  服务器详情
 {% endblock %}
+{% block head %}
+  <script type="text/javascript" src=" http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+  <script>
+    jQuery(function($){
+
+        $.get("/server/detail/"+
+    }
+  </script>
+{% endblock %}
 {% block content %}
 {{ mem }}
 {% endblock %}
