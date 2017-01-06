@@ -195,5 +195,5 @@ def servers_detail(request, id):
     ip = Servers.objects.filter(pk=int(id)).values('ip')
     raw_info = subprocess.check_output("/usr/bin/ansible {ip} -m setup".format(ip=ip[0]['ip']),shell=True)
     base_info = json.loads(raw_info.split('=>')[1])
-    mem = base_info['ansible_facts']['ansbile_memtotal_mb']
-    return HttpResponse('server_details.html',{'men': mem})
+    mem = base_info['ansible_facts']['ansible_memtotal_mb']
+    return render_to_response('server_details.html',{'mem':mem})
