@@ -3,7 +3,8 @@
   <script type="text/javascript" src=" http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
   <script>
     function server_details(){
-        var id=$("[href$='\d']");
+        var id=$("#server_id").attr("href").split("/").pop();
+        alert(id);
         $.get("/server/detail/"+id,function(data){
            alter(data);
         });
@@ -58,7 +59,7 @@
                        <td data-align="right">{{ server.purpose }}</td>
                        <td data-align="right">{{ server.status }}</td>
                        <td data-align="right">{{ server.remark }}</td>
-                       <td data-align="right"><a href="/server/edit/{{ server.id }}" onclick="edit()">编辑</a></td>
+                       <td data-align="right"><a id="server_id" href="/server/edit/{{ server.id }}" onclick="edit()">编辑</a></td>
                        <td data-align="right"><a href="#" onclick="server_details()" >详情</a></td>
                    </tr>
                </tbody>
