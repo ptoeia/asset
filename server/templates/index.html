@@ -4,6 +4,7 @@
   <script>
     function server_details(){
         var id=$("#server_id").attr("href").split("/").pop();
+        alert(id);
         $.get("/server/detail/"+id,function(data){
            alert(data);
         });
@@ -42,6 +43,9 @@
                      <th  align="center">序号</th>
                      <th width= align="center">服务器名</th>
                      <th  align="center">IP</th>
+                      <th  align="center">CPU</th>
+                      <th  align="center">内存</th>
+                      <th  align="center">硬盘容量</th>
                      <th width= align="center">用途</th>
                      <th width= align="center">状态</th>
                    <!--  <th width= align="center">位置</th>-->
@@ -55,6 +59,9 @@
                        <td data-align="right">{{ forloop.counter }}</td>
                        <td data-align="right"><a href="/server/edit/{{ server.id }}">{{ server.name }}</a></td>
                        <td data-align="right">{{ server.ip }}</td>
+                       <td data-align="right">{{ server.cpu }}</td>
+                       <td data-align="right">{{ server.memory }}</td>
+                       <td data-align="right">{{ server.disk_volume }}</td>
                        <td data-align="right">{{ server.purpose }}</td>
                        <td data-align="right">{{ server.status }}</td>
                        <td data-align="right">{{ server.remark }}</td>
