@@ -2,17 +2,18 @@
 # -*- coding:utf-8 -*-
 # __author__ = 'abc'
 import csv
-import os,re
+import os, re
 import json
 import subprocess
 
-
 from django.shortcuts import render_to_response
 from django.forms.models import model_to_dict
-from django.core.servers.basehttp import FileWrapper
+#from django.core.servers.basehttp import FileWrapper
 
 from server.models import Servers
-from form import ServerForm,UserRegister,pagination
+from form import ServerForm,UserRegister
+
+from function import pagination
 
 from django.http import HttpResponseRedirect,HttpResponse,StreamingHttpResponse
 from django.db.models import Q
@@ -84,7 +85,6 @@ def user_register(request):
             email = newuser.cleaned_data['email']
             password = newuser.cleaned_data['password']
             User.objects.create_user(username,email,password)
-#           NewUser.save()
             return HttpResponseRedirect('/server/manager')
     else:
         newuser = UserRegister()
@@ -162,14 +162,16 @@ def download(request, projectname): #log file download
 
 
 def server_info_update(request, id):
-    ip = Servers.objects.filter(pk=int(id)).values('ip')
-    raw_info = subprocess.check_output("/usr/bin/ansible {ip} -m setup".format(ip=ip[0]['ip']),shell=True)
-    base_info = json.loads(raw_info.split('=>')[1])['ansible_facts']
-    cpu = base_info['ansible_processor_vcpus']
-    memory = round(int(base_info['ansible_memtotal_mb'])/1024.0,1)
-    disk_volume = sum([int(base_info['ansible_devices'][disk]['size']) for disk in base_info['ansible_devices']])
-    hostname = base_info['ansible_hostname']
-    os = base_info['description']
+    try:
+        server = Servers.objects.get(pk=int(id))
+    except DoesNotExist:
 
-    
+    raw_info = subprocess.check_output("/usr/bin/ansible {ip} -m setup".format(ip=server.private_ip),shell=True)
+    base_info = json.loads(raw_info.split('=>')[1])['ansible_facts']
+    server.cpu = base_info['ansible_processor_vcpus']
+    server.memory = round(int(base_info['ansible_memtotal_mb'])/1024.0,1)
+    server.disk_volume = sum([int(base_info['ansible_devices'][disk]['size']) for disk in base_info['ansible_devices']])
+    server.hostname = base_info['ansible_hostname']
+    server.os = base_info['description']
+    server.save()
     return HttpResponse(mem)

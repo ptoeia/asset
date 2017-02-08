@@ -4,7 +4,7 @@ from django import forms
 from django.forms import ModelForm
 from models import Servers,User
 from django.contrib.auth.admin import User
-from django.core.paginator import Paginator,InvalidPage,EmptyPage
+
 
 
 class ServerForm(ModelForm):
@@ -65,15 +65,4 @@ class Admins(ModelForm):
         fields = ['username', 'email']
 
 
-def pagination(request, server):  # pagination
-    paginator = Paginator(server, 7)  # show 7 severs per page
-    pagerange = paginator.page_range  # page list
-    try:
-        leaf = int(request.GET.get('page', '1'))
-    except ValueError:
-        leaf = 1
-    try:
-        server_list = paginator.page(leaf)
-    except(EmptyPage,InvalidPage):
-        server_list = paginator.page(paginator.num_pages)
-    return server_list,pagerange
+

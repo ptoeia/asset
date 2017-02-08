@@ -18,7 +18,7 @@ class Servers (models.Model):
     remark = models.CharField(max_length=40, verbose_name='备注', null='true', blank='true')
 
     def __unicode__(self):
-        return self.name
+        return self.hostname
 
     class Meta:
          db_table = 'servers'
