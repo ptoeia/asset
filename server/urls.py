@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^add', 'server.views.add_server'),
  #   url(r'^export', 'server.views.export',name='export_csv'),
     url(r'^edit/(?P<eid>\d+)/$', 'server.views.edit_server'),
-    url(r'^detail/(?P<id>\d+)/$','server.views.servers_detail'),
+    url(r'^update/(?P<id>\d+)/$','server.views.server_info_update'),
     url(r'^link', 'server.views.link'),
  #   url(r'^edit', 'server.views.display_meta'),
     url(r'^register', 'server.views.user_register'),

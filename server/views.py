@@ -161,9 +161,15 @@ def download(request, projectname): #log file download
     return response
 
 
-def servers_detail(request, id):
+def server_info_update(request, id):
     ip = Servers.objects.filter(pk=int(id)).values('ip')
     raw_info = subprocess.check_output("/usr/bin/ansible {ip} -m setup".format(ip=ip[0]['ip']),shell=True)
-    base_info = json.loads(raw_info.split('=>')[1])
-    mem = base_info['ansible_facts']['ansible_memtotal_mb']
+    base_info = json.loads(raw_info.split('=>')[1])['ansible_facts']
+    cpu = base_info['ansible_processor_vcpus']
+    memory = round(int(base_info['ansible_memtotal_mb'])/1024.0,1)
+    disk_volume = sum([int(base_info['ansible_devices'][disk]['size']) for disk in base_info['ansible_devices']])
+    hostname = base_info['ansible_hostname']
+    os = base_info['description']
+
+    
     return HttpResponse(mem)
