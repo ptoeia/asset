@@ -8,8 +8,8 @@ from django.contrib.auth.admin import User
 
 
 class ServerForm(ModelForm):
-    ip = forms.GenericIPAddressField(max_length=30,  protocol='ipv4',
-                                     help_text=u'必填', error_messages={'required': u'请输入ip'})
+    #ip = forms.GenericIPAddressField(max_length=30,  protocol='ipv4',
+    #                                 help_text=u'必填', error_messages={'required': u'请输入ip'})
 
     class Meta:
         model = Servers

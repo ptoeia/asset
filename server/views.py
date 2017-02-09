@@ -164,14 +164,16 @@ def download(request, projectname): #log file download
 def server_info_update(request, id):
     try:
         server = Servers.objects.get(pk=int(id))
-    except DoesNotExist:
-
-    raw_info = subprocess.check_output("/usr/bin/ansible {ip} -m setup".format(ip=server.private_ip),shell=True)
-    base_info = json.loads(raw_info.split('=>')[1])['ansible_facts']
-    server.cpu = base_info['ansible_processor_vcpus']
-    server.memory = round(int(base_info['ansible_memtotal_mb'])/1024.0,1)
-    server.disk_volume = sum([int(base_info['ansible_devices'][disk]['size']) for disk in base_info['ansible_devices']])
-    server.hostname = base_info['ansible_hostname']
-    server.os = base_info['description']
-    server.save()
-    return HttpResponse(mem)
+        raw_info = subprocess.check_output("/usr/bin/ansible {ip} -m setup".format(ip=server.private_ip),shell=True)
+        base_info = json.loads(raw_info.split('=>')[1])['ansible_facts']
+        server.cpu = base_info['ansible_processor_vcpus']
+        server.memory = round(int(base_info['ansible_memtotal_mb'])/1024.0,1)
+        disk_info = base_info['ansible_devices']
+        server.disk_volume = sum([int(disk_info[disk]['sectors'])*int(disk_info[disk]['sectorsize'])  for disk in disk_info])/1024**3
+        server.hostname = base_info['ansible_hostname']
+        server.os = base_info['ansible_lsb']['description']
+        server.save()
+        feedback = u'更新成功'
+    except:
+       feedback =  u'更新失败'
+    return HttpResponse(feedback)
