@@ -2,7 +2,7 @@
 {% block head %}
 <style>
     .oper{
-        width:120px;
+        width:160px;
         text-align:center;
     }
 </style>
@@ -19,18 +19,39 @@
 
 {% block content %}
   <div class="container-fluid">
-     <div class="row-fluid">
-      <div class="span12">
-      <a href="/server/add"><span class="label-info"> 添加 </span></a>
-           <div class="pull-right">
-             <form class="form-search" aciton="" method="get">
+      <div class="row-fluid">
+					<div class="span12">
+						<!-- END BEGIN STYLE CUSTOMIZER -->
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">资产管理</h3>
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="index.html">主页</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li><a href="#">资产管理</a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+      <div class="row-fluid">
+          <div class="span8">
+          <a href="/server/add"><span class="label-info"> 添加 </span></a>
+
+             <form class="pull-right form-search" aciton="" method="get">
                  <input type="text" class="input-medium search-query" name="q" placeholder="关键词">
                  <input type="submit" value="搜索" class="btn">
              </form>
-{% if error %}
-       <p style="color:red;">please submit a search term.</p>
-         {% endif %}
-    </div>
+               {% if error %}
+              <p style="color:red;">please submit a search term.</p>
+              {% endif %}
+
+          </div>
+
+      </div>
+      <div class="row-fluid">
+          <div class="span10">
            <table  class="table-hover table-condensed table-bordered" >
                <thead>
                   <tr bgcolor="#E8FFE8" >
@@ -80,8 +101,7 @@
                {% endfor %}
            </table>
            <!--  <input type="submit" name="del" value="delete" class="btn">-->
-       </div>
-       <div class = "pagination">
+       <div class = "pull-right pagination span7">
            <span >
                {% if server_list.has_previous %}
             <a href="?page={{ server_list.previous_page_number }}">上一页</a>
@@ -97,6 +117,8 @@
                {% endif %}
            </span>
         </div>
-  </div>
+              </div>
+
+          </div>
       </div>
 {% endblock %}

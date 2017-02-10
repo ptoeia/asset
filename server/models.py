@@ -26,4 +26,11 @@ class Servers (models.Model):
 
 
 # create table user
+class UserProfile(models.Model):
+    username = models.OneToOneField(User,primary_key=True)
+    #email = models.OneToOneField()
+    phone = models.CharField(u'手机',max_length=11)
+
+    def __unicode__(self):
+        return self.username
 

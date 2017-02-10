@@ -18,6 +18,8 @@ urlpatterns = [
  #   url(r'^edit', 'server.views.display_meta'),
     url(r'^register', 'server.views.user_register'),
  #   url(r'^boot','server.views.boot'),
+    url(r'run','server.views.cmd_run'),
     url(r'^useradmin','server.views.user'),
     url(r'^del/(?P<d_id>\d+)/$', 'server.views.del_server'),
+    url(r'^test','server.views.test'),
   ]

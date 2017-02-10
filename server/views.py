@@ -131,11 +131,6 @@ def user(request):
     admins = User.objects.all()
     return render_to_response('useradmin.html', {'admins': admins})
 
-# display link resource
-@login_required(login_url='login.html')
-def link(request):
-    return render_to_response('resource.html')
-
 
 
 @login_required(login_url='login.html')
@@ -182,3 +177,13 @@ def server_info_update(request, id):
     except:
        feedback =  u'更新失败'
     return HttpResponse(feedback)
+
+def cmd_run(request):
+    cmd = request.POST.get('cmd','')
+    if cmd:
+        result = subprocess.check_output("/usr/bin/ansible {ip} -raw -a '{cmd}'".format(ip,cmd),shell=True)
+        
+    return render_to_response('cmd_run.html')
+
+def test(request):
+    return render_to_response('bootstrap.html')

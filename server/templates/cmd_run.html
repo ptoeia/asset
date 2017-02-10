@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block head %}
+<style >
+.cmd-result{
+    background:#191970;
+    color:#FFF;
+    height:200px}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+      <div class="row-fluid">
+          <div class="span12">
+						<!-- END BEGIN STYLE CUSTOMIZER -->
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+              <h3 class="page-title">运行命令</h3>
+              <ul class="breadcrumb">
+                  <li>
+                      <i class="icon-home"></i>
+                      <a href="index.html">首页</a>
+                      <i class="icon-angle-right"></i>
+                  </li>
+                  <li><a href="#">运行命令</a></li>
+              </ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+          </div>
+          <hr />
+
+      <div class="row-fluid">
+          <div class="span4">
+              <form class="form-inline" method="post">
+                  <input type="text" name="cmd" placeholder="输入命令">
+                  <input type="submit" class="btn-info">
+              </form>
+          </div>
+
+      </div>
+      </div>
+    <div class="row-fluid">
+     <div class="span8 cmd-result" >
+         <p>result</p>
+      </div>
+     </div>
+    </div>
+
+{% endblock %}
