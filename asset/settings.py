@@ -83,9 +83,6 @@ DATABASES = {
         'PASSWORD': '111111',
         'HOST' : '192.168.137.152',
         'PORT': '3306',
-
-
-
     }
 }
 
@@ -115,7 +112,7 @@ STATICFILES_DIRS=(
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/server/'),
 )
-SESSION_COOKIE_AGE = 60*20
+SESSION_COOKIE_AGE = 60*100
 
 '''
 if 0:

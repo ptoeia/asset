@@ -5,7 +5,8 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^$', 'server.views.login_view'),
-    url(r'^index',  'server.views.assets'),
+    url(r'^index',  'server.views.index'),
+    url(r'^asset',  'server.views.assets'),
     url(r'^logout', 'server.views.logout_view'),
     url(r'^log/download/(?P<projectname>\w+)', 'server.views.download'),
     url(r'^log','server.views.log'),

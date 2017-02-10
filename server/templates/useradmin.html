@@ -1,24 +1,61 @@
 {% extends "base.html" %}
 
 {% block content %}
-<a href="register.html">添加新用户</a>
-<table width="100" class=" table-condensed table-bordered">
-    <thead>
-       <tr>
-           <th>user</th>
-           <th>Email</th>
-       </tr>
-    </thead>
-    {% for admin in admins %}
-    <tbody>
-        <tr>
-            <td>{{ admin.username }}</td>
-            <td>{{ admin.email }}</td>
-         </tr>
-
-    </tbody>
+	<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- END BEGIN STYLE CUSTOMIZER -->
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">用户管理</h3>
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="index.html">主页</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li><a href="#">用户管理</a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+					<!-- BEGIN DASHBOARD STATS -->
+					<div class=" box span10">
+                        <div>
+                            <a href="register.html">
+                                <span class="label label-warning">添加用户</span>
+                            </a>
+                        </div>
+                        <table class="table table-bordered table-striped table-condensed">
+                           <thead>
+                               <tr>
+                                   <th>用户名</th>
+                                   <th>邮箱</th>
+                                   <th>操作</th>
+                              </tr>
+                           </thead>
+                            {% for admin in admins %}
+                            <tbody>
+                               <tr>
+                                   <td>{{ admin.username }}</td>
+                                   <td>{{ admin.email }}</td>
+                                   <td>
+                                       <a href="#">
+                                           <span class="label-warning">删除</span>
+                                        </a>
+                                        <a href="#">
+                                           <span class="label-info">更新</span>
+                                        </a>
+                                   </td>
+                               </tr>
+                            </tbody>
     {% endfor %}
 </table>
+					</div>
+			</div>
+
+
 
 
 {% endblock %}

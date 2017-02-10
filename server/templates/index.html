@@ -1,99 +1,66 @@
 {% extends "base.html" %}
-{% block head %}
-<style>
-    .oper{
-        width:120px;
-        text-align:center;
-    }
-</style>
-  <script type="text/javascript" src=" http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
-  <script>
-    function server_info_update(){
-        var id=$("#server_id").attr("href").split("/").pop();
-        $.get("/server/update/"+id,function(data){
-           alert(data);
-        });
-    };
- </script>
-{% endblock %}
-
 {% block content %}
-  <div class="container">
-     <div class="table">
-        <td>
-             <form class="form-search" aciton="" method="get">
-                 <input type="text" class="input-medium search-query" name="q" placeholder="关键词">
-                 <input type="submit" value="搜索" class="btn">
-             </form>
-        </td>
-       </tr>
-{% if error %}
-       <p style="color:red;">please submit a search term.</p>
-         {% endif %}
-    </div>
-       <div >
-           <table  width="1000" class="table-hover table-condensed table-bordered" >
-               <thead>
-                  <tr align="right">
-                      <th><a href="/server/add">添加</a></th>
-                  </tr>
-                  <tr bgcolor="#E8FFE8" >
-                     <th  align="center">序号</th>
-                     <th  align="center">主机名</th>
-                     <th  align="center">公网IP</th>
-                     <th  align="center">内网IP</th>
-                     <th  align="center">操作系统</th>
-                     <th  align="center">CPU</th>
-                     <th  align="center">内存(G)</th>
-                     <th  align="center">硬盘容量(G)</th>
-                     <th  align="center">用途</th>
-                     <th  align="center">位置</th>
-                     <th  align="center">状态</th>
-                     <th  align="center">备注</th>
-                     <th class="oper">操作</th>
-                  </tr>
-               </thead>
-                {% for server in server_list  %}
-               <tbody class='success error warning info'>
-                   <tr font="Arial" >
-                       <td data-align="right">{{ forloop.counter }}</td>
-                       <td data-align="right"><a href="/server/edit/{{ server.id }}">{{ server.hostname }}</a></td>
-                       <td data-align="right">{{ server.public_ip }}</td>
-                       <td data-align="right">{{ server.private_ip }}</td>
-                       <td data-align="right">{{ server.os }}</td>
-                       <td data-align="right">{{ server.cpu }}</td>
-                       <td data-align="right">{{ server.memory }}</td>
-                       <td data-align="right">{{ server.disk_volume }}</td>
-                       <td data-align="right">{{ server.purpose }}</td>
-                       <td data-align="right">{{ server.location }}</td>
-                       <td data-align="right">{{ server.status }}</td>
-                       <td data-align="right">{{ server.remark }}</td>
-                       <td data-align="right"><a id="server_id" href="/server/edit/{{ server.id }}">编辑</a>
-                       <a id="server_id" href="#" onclick="server_info_update()">更新</a>
-                       <a id="server_id" href="/server/edit/{{ server.id }}" onclick="del()">删除</a>
-                       </td>
-                   </tr>
-               </tbody>
-               {% endfor %}
-           </table>
-           <!--  <input type="submit" name="del" value="delete" class="btn">-->
-       </div>
-       <div class = "pagination">
-           <span >
-               {% if server_list.has_previous %}
-            <a href="?page={{ server_list.previous_page_number }}">上一页</a>
-            {% endif %}
-           <span >
-               {% for i in page_list  %}
-               <a href="?page={{ i }}" >{{ i }}</a>
-               {% endfor %}
-               第{{ server_list.number }}页
-           </span>
-               {% if server_list.has_next %}
-               <a href="?page={{ server_list.next_page_number }}" >下一页</a>
-               {% endif %}
-           </span>
-        </div>
-  </div>
-<div><p><strong>欢迎 {{ username }}</strong></p></div>
+			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<div id="portlet-config" class="modal hide">
+				<div class="modal-header">
+					<button data-dismiss="modal" class="close" type="button"></button>
+					<h3>Widget Settings</h3>
+				</div>
+				<div class="modal-body">
+					Widget settings form goes here
+				</div>
+			</div>
+			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+			<!-- BEGIN PAGE CONTAINER-->
+			<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+
+						<!-- END BEGIN STYLE CUSTOMIZER -->
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">
+							Dashboard
+						</h3>
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="index.html">Home</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li><a href="#">Dashboard</a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				<div id="dashboard">
+					<!-- BEGIN DASHBOARD STATS -->
+					<div class="row-fluid">
+						<div class="span3 responsive" data-tablet="span6" data-desktop="span3">
+							<div class="dashboard-stat blue">
+								<div class="visual">
+									<i class="icon-comments"></i>
+								</div>
+								<div class="details">
+									<div class="number">
+										1349
+									</div>
+									<div class="desc">
+										New Feedbacks
+									</div>
+								</div>
+								<a class="more" href="#">
+								View more <i class="m-icon-swapright m-icon-white"></i>
+								</a>
+							</div>
+						</div>
+
+
+					</div>
+					<!-- END DASHBOARD STATS -->
+					<div class="clearfix"></div>
+
+				</div>
+			</div>
 {% endblock %}

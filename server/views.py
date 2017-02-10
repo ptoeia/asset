@@ -23,6 +23,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.admin import User
 
 
+@login_required(login_url='login.html')
+def index(request):
+    return render_to_response('index.html')
+
+
 
 @login_required(login_url='login.html')
 def assets(request):  # display the server information and search function together
@@ -36,10 +41,10 @@ def assets(request):  # display the server information and search function toget
                   )
         server = Servers.objects.filter(qset)
         server_list, page_list = pagination(request, server)
-        return render_to_response('index.html', {'server_list': server_list, "page_list": page_list})
+        return render_to_response('asset.html', {'server_list': server_list, "page_list": page_list})
     server = Servers.objects.all()
     server_list,page_list = pagination(request,server)
-    return render_to_response('index.html',{'server_list': server_list, "page_list": page_list})
+    return render_to_response('asset.html',{'server_list': server_list, "page_list": page_list})
 
 # add server
 @login_required(login_url='login.html')
