@@ -182,7 +182,7 @@ def cmd_run(request):
     cmd = request.POST.get('cmd','')
     if cmd:
         result = subprocess.check_output("/usr/bin/ansible {ip} -raw -a '{cmd}'".format(ip,cmd),shell=True)
-        
+    
     return render_to_response('cmd_run.html')
 
 def test(request):
